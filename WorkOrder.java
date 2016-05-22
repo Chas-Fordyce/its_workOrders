@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.*;
 
 public class WorkOrder
 {
@@ -52,7 +53,6 @@ public class WorkOrder
 		this.makeModel = newMakeModel;
 	}
 	
-	
 	// Getters
 	public int getOrderNumber ()
 	{
@@ -68,4 +68,20 @@ public class WorkOrder
 	}
 	
 	// Methods
+	// Get newest work order number from file and updates the file to the next order number
+	static int getNumberFromFile () throws FileNotFoundException()
+	{
+		File file = new File("ordernumber.txt");
+		
+		// Gets the current number
+		Scanner input = new Scanner(file);
+		int number = input.nextInt();
+		
+		// Sets the number one higher
+		PrintStream output = new PrintStream(file);
+		output.println((number + 1));
+		output.close();
+		
+		return number
+	}
 }
