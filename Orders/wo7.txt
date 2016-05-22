@@ -1,0 +1,31 @@
+Island Tech Support					INVOICE #: 007
+Charles Fordyce III                                     DATE: 5/22/2016
+215 Clayton Place 
+Bainbridge Island, WA 98110
+Phone: (206) 451-4121
+Email: charlesfordyce3@gmail.com
+
+
+
+-- Description of Services --             -- Hours --
+ - File scans, ran for viruses                0.5 
+ - Backed up documents, pictures, etc         1.0
+ - Cleaned internal parts, fans, etc          0.5
+ - Installed OSX                              0.5
+ - Installed Office, iWork                    0.5
+ - Updated OSX                                1.0
+                                            -----
+                              Total hours:    4.0
+                           Price per hour:  $20.0
+                                            -----
+                              Grand total:  $80.0
+
+
+-- Suggestions for future service --
+ - Upgrade RAM (from 4GB to 8GB or 16GB) - $60 for part, $20 for labor
+ - Upgrade Hard Drive (from HDD to SSD) - $80 to $200 for part depending on size, $30 for labor
+
+Refer a friend and save $10 off your next cleaning, set-up, or service.
+
+
+Thank you for your business!
