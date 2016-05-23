@@ -27,11 +27,11 @@ public class Invoice
   private void invoiceCreator () throws FileNotFoundException
   {
     // Create the file
-    String str = "\\Orders\\invoice" + this.invoiceNumber + ".txt";
+    String str = "./Orders/invoice" + this.invoiceNumber + ".txt";
     File invoice = new File(str);
 
     // Get the template and make a writer to the new file
-    Scanner fileIn = new Scanner(new File("\\Orders\\invoice_template.txt"));
+    Scanner fileIn = new Scanner(new File("./Orders/invoice_template.txt"));
     PrintWriter fileOut = new PrintWriter(invoice);
 
     // Write to the new file
