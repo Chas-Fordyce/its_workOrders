@@ -11,7 +11,7 @@ Email: charlesfordyce3@gmail.com
 -- Description of Services --             -- Hours --
  -
                                             -----
-                              Total hours:    0.0
+                              Total hours:   
                            Price per hour:  $20.0
                                             -----
                               Grand total:  $00.0

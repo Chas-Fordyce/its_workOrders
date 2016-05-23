@@ -7,6 +7,7 @@ public class Invoice
   int invoiceNumber;
   String date;
   String[] descriptionOfServices;
+  int[] hours;
   String[] suggestionsForFutureServices;
 
   // Constructors
@@ -16,13 +17,68 @@ public class Invoice
     this.invoiceNumber = orderNumberGetter();
     this.date = dateGetter();
     this.descriptionOfServices = descriptionOfServicesGetter();
+    this.hours = hoursGetter();
     this.suggestionsForFutureServices = suggestionsForFutureServicesGetter();
+
+    invoiceCreator();
   }
 
-  // File creator
+  // File creator editors
   private void invoiceCreator () throws FileNotFoundException
   {
-    
+    // Create the file
+    String str = "invoice" + this.invoiceNumber + ".txt";
+    File invoice = new File(str);
+
+    // Get the template and make a writer to the new file
+    Scanner fileIn = new Scanner(new File("Orders\\invoice_template.txt"));
+    PrintWriter fileOut = new PrintWriter(invoice);
+
+    // Write to the new file
+    invoiceWriter(fileIn, fileOut);
+  }
+
+  private void invoiceWriter (Scanner fileIn, PrintWriter fileOut) throws FileNotFoundException
+  {
+    // Write the invoice number and date in the first two lines
+    fileOut.println(fileIn.nextLine() + " " + this.invoiceNumber);
+    fileOut.println(fileIn.nextLine() + " " + this.date);
+
+    // Writes unchanged items
+    for (int i = 0; i < 9; i++)
+    {
+      fileOut.println(fileIn.nextLine());
+    }
+
+    // Writes the descriptions
+    int count = 0;
+    for (int i = 0; i < this.descriptionOfServices.length; i++)
+    {
+      int num = 46 - this.descriptionOfServices[i].length();
+      String space = " " * num;
+      fileOut.println(" - " + this.descriptionOfServices[i] + space + this.hours[i]);
+      count += this.hours[i];
+    }
+    fileOut.println(fileIn.nextLine());
+    fileOut.println(fileIn.nextLine() + count);
+    fileOut.println(fileIn.nextLine());
+    fileOut.println(fileIn.nextLine());
+    fileOut.println(fileIn.nextLine() + (count * 20));
+
+    // Writes suggestions
+    fileOut.println(fileIn.nextLine());
+    fileOut.println(fileIn.nextLine());
+    fileOut.println(fileIn.nextLine());
+    for (int i = 0; i < this.suggestionsForFutureServices.length; i++)
+    {
+      fileOut.println(" - " + this.suggestionsForFutureServices[i]);
+    }
+
+    // Writes the rest
+    while (fileIn.hasNext())
+    {
+      fileOut.println(fileIn.nextLine());
+    }
   }
 
   // Field setters
@@ -37,10 +93,6 @@ public class Invoice
 		output.println((num + 1));
   }
 
-  private int orderTemplateGetter () throws FileNotFoundException
-  {
-    Scanner input = new Scanner("Orders\\workOrder_template.txt");
-  }
 
   private String dateGetter ()
   {
@@ -80,6 +132,18 @@ public class Invoice
     }
 
     return descriptions;
+  }
+
+  private int[] hoursGetter ()
+  {
+    Scanner input = new Scanner(System.in);
+    int[] hours_temp = int[descriptionOfServices.length];
+    for (int i = 0; i < descriptionOfServices.length; i++)
+    {
+      System.out.print(descriptionOfServices[i] + " ");
+      hours_temp[i] = input.nextInt();
+    }
+    return hours_temp;
   }
 
   private String[] suggestionsForFutureServicesGetter ()
