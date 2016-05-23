@@ -7,7 +7,7 @@ public class Invoice
   int invoiceNumber;
   String date;
   String[] descriptionOfServices;
-  int[] hours;
+  double[] hours;
   String[] suggestionsForFutureServices;
 
   // Constructors
@@ -27,15 +27,16 @@ public class Invoice
   private void invoiceCreator () throws FileNotFoundException
   {
     // Create the file
-    String str = "invoice" + this.invoiceNumber + ".txt";
+    String str = "\\Orders\\invoice" + this.invoiceNumber + ".txt";
     File invoice = new File(str);
 
     // Get the template and make a writer to the new file
-    Scanner fileIn = new Scanner(new File("Orders\\invoice_template.txt"));
+    Scanner fileIn = new Scanner(new File("\\Orders\\invoice_template.txt"));
     PrintWriter fileOut = new PrintWriter(invoice);
 
     // Write to the new file
     invoiceWriter(fileIn, fileOut);
+    fileOut.close();
   }
 
   private void invoiceWriter (Scanner fileIn, PrintWriter fileOut) throws FileNotFoundException
@@ -51,18 +52,28 @@ public class Invoice
     }
 
     // Writes the descriptions
-    int count = 0;
+    double count = 0;
     for (int i = 0; i < this.descriptionOfServices.length; i++)
     {
-      int num = 46 - this.descriptionOfServices[i].length();
-      String space = " " * num;
-      fileOut.println(" - " + this.descriptionOfServices[i] + space + this.hours[i]);
+      String str = " - " + this.descriptionOfServices[i];
+      for (int j = 0; j < (46 - (this.descriptionOfServices[i].length() + 3)); j++)
+      {
+          str += " ";
+      }
+      str += this.hours[i];
+
+      fileOut.println(str);
       count += this.hours[i];
     }
+    /*fileOut.println(*/fileIn.nextLine();//);
+    fileOut.println();
     fileOut.println(fileIn.nextLine());
-    fileOut.println(fileIn.nextLine() + count);
+    // Total hours
+    fileOut.println(fileIn.nextLine() + " " + count);
     fileOut.println(fileIn.nextLine());
+    // Price per hour
     fileOut.println(fileIn.nextLine());
+    // Grand total
     fileOut.println(fileIn.nextLine() + (count * 20));
 
     // Writes suggestions
@@ -73,6 +84,7 @@ public class Invoice
     {
       fileOut.println(" - " + this.suggestionsForFutureServices[i]);
     }
+    fileIn.nextLine();
 
     // Writes the rest
     while (fileIn.hasNext())
@@ -84,13 +96,17 @@ public class Invoice
   // Field setters
   private int orderNumberGetter () throws FileNotFoundException
   {
+    File file = new File("ordernumber.txt");
     // Reads the file and gets the number
-    Scanner input = new Scanner("ordernumber.txt");
-    int num = input.nextInt();
+    Scanner fileIn = new Scanner(file);
+    int num = fileIn.nextInt();
 
     // Rewrites the file
-    PrintWriter output = new PrintWriter(file);
-		output.println((num + 1));
+    PrintWriter fileOut = new PrintWriter(file);
+    fileOut.println((num + 1));
+    fileOut.close();
+
+    return num;
   }
 
 
@@ -110,12 +126,12 @@ public class Invoice
     boolean keepGoing = true;
     while (keepGoing)
     {
-      System.out.println("Service: ");
-      String temp = input.next();
-      if (temp == "done")
+      System.out.print("Service: ");
+      String temp = input.nextLine();
+      if (temp.equals("done"))
       {
         keepGoing = false;
-        break;
+        //break;
       }
       else
       {
@@ -124,7 +140,7 @@ public class Invoice
     }
 
     // Add them to the array which is returned
-    String[] descriptions = String[descriptions_temp.size()];
+    String[] descriptions = new String[descriptions_temp.size()];
 
     for (int i = 0; i < descriptions_temp.size(); i++)
     {
@@ -134,14 +150,14 @@ public class Invoice
     return descriptions;
   }
 
-  private int[] hoursGetter ()
+  private double[] hoursGetter ()
   {
     Scanner input = new Scanner(System.in);
-    int[] hours_temp = int[descriptionOfServices.length];
+    double[] hours_temp = new double[descriptionOfServices.length];
     for (int i = 0; i < descriptionOfServices.length; i++)
     {
-      System.out.print(descriptionOfServices[i] + " ");
-      hours_temp[i] = input.nextInt();
+      System.out.print(descriptionOfServices[i] + " : hours (double)? ");
+      hours_temp[i] = input.nextDouble();
     }
     return hours_temp;
   }
@@ -155,12 +171,12 @@ public class Invoice
     boolean keepGoing = true;
     while (keepGoing)
     {
-      System.out.println("Future service: ");
-      String temp = input.next();
-      if (temp == "done")
+      System.out.print("Future service: ");
+      String temp = input.nextLine();
+      if (temp.equals("done"))
       {
         keepGoing = false;
-        break;
+        //break;
       }
       else
       {
@@ -169,7 +185,7 @@ public class Invoice
     }
 
     // Add them to the array which is returned
-    String[] futureServices = String[futureServices_temp.size()];
+    String[] futureServices = new String[futureServices_temp.size()];
 
     for (int i = 0; i < futureServices_temp.size(); i++)
     {
